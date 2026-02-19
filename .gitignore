@@ -1,0 +1,27 @@
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userprefs
+*.sln.ide
+
+# KSP
+*.ckpt
+*.craft
+*.science
+*.saves/
+
+# C#
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.mdb
+*.cache
+*.serialized
+*.sln.cache
+
+# Others
+.DS_Store
+Thumbs.db
