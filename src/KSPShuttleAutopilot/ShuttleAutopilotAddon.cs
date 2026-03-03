@@ -23,6 +23,8 @@ namespace KSPShuttleAutopilot
 
         public void Update() => _controller?.OnUpdate();
 
+        public void OnGUI() => _controller?.OnGUI();
+
         public void OnDestroy()
         {
             _controller?.Dispose();

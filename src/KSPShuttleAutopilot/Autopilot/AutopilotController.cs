@@ -1,44 +1,71 @@
 using UnityEngine;
 
-public class AutopilotController : MonoBehaviour
+namespace KSPShuttleAutopilot.Autopilot
 {
-    private Settings _settings;
-    private Plans _plans;
-
-    public void Initialize()
+    /// <summary>
+    /// Orchestrates all autopilot subsystems. Created and owned by <see cref="ShuttleAutopilotAddon"/>.
+    /// </summary>
+    public sealed class AutopilotController
     {
-        _settings = new Settings();
-        _plans = new Plans();
-        try
-        {
-            _settings.Load();
-            _plans.Load();
-        }
-        catch (System.Exception e)
-        {
-            UnityEngine.Debug.LogError("Error loading settings and plans: " + e.Message);
-        }
-    }
+        private readonly VesselContext _vessel;
+        private readonly Persistence.SettingsStore _settings;
+        private readonly Persistence.PlanStore _plans;
+        private readonly Planning.DeorbitPlanner _planner;
+        private readonly Execution.ManeuverNodeService _nodeService;
+        private readonly Execution.BurnExecutor _burnExecutor;
+        private readonly UI.MainWindow _ui;
 
-    public void Dispose()
-    {
-        try
+        public AutopilotController()
         {
-            Save();
+            _vessel    = new VesselContext();
+            _settings  = new Persistence.SettingsStore();
+            _plans     = new Persistence.PlanStore();
+            _planner   = new Planning.DeorbitPlanner();
+            _nodeService = new Execution.ManeuverNodeService(_vessel, _settings, _plans);
+            _burnExecutor = new Execution.BurnExecutor(_vessel, _settings, _plans);
+            _ui = new UI.MainWindow(_planner, _nodeService, _burnExecutor, _settings, _plans);
         }
-        catch (System.Exception e)
+
+        public void Initialize()
         {
-            UnityEngine.Debug.LogError("Error during disposal: " + e.Message);
+            try
+            {
+                _settings.Load();
+                _plans.Load();
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"[KSPShuttleAutopilot] Initialize failed: {ex}");
+            }
+
+            _ui.Initialize();
         }
-    }
 
-    private void OnUpdate()
-    {
-        // Ensure no file IO occurs here.
-    }
+        public void OnUpdate()
+        {
+            _vessel.Refresh();
+            _burnExecutor.OnUpdate();
+            _ui.OnUpdate();
+        }
 
-    private void Save()
-    {
-        // Save logic here
+        public void OnGUI()
+        {
+            _ui.OnGUI();
+        }
+
+        public void Dispose()
+        {
+            try
+            {
+                _settings.Save();
+                _plans.Save();
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"[KSPShuttleAutopilot] Dispose failed: {ex}");
+            }
+
+            _ui.Dispose();
+        }
     }
 }

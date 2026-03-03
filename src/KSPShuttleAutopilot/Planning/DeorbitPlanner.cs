@@ -8,6 +8,28 @@ namespace KSPShuttleAutopilot.Planning
 {
     public class DeorbitPlanner
     {
+        /// <summary>
+        /// Compute a deorbit plan for the specified runway target.
+        /// Phase 1: returns a placeholder plan; full algorithm is deferred to Phase 2.
+        /// </summary>
+        public PlanningModels.DeorbitPlan ComputePlan(PlanningModels.RunwayRecord runway)
+        {
+            if (runway == null)
+                throw new ArgumentNullException(nameof(runway));
+
+            // Phase 1 stub: return a plan seeded with the runway coordinates.
+            return new PlanningModels.DeorbitPlan
+            {
+                RunwayId               = runway.Id ?? string.Empty,
+                BurnUT                 = 0.0,
+                DeltaV_mps             = 0.0,
+                PeriapsisTarget_m      = 0.0,
+                PredictedImpactLatDeg  = runway.LatitudeDeg,
+                PredictedImpactLonDeg  = runway.LongitudeDeg,
+                MissDistance_m         = 0.0,
+            };
+        }
+
         // Phase 1 deorbit planning algorithm
 
         public void PlanDeorbit(double currentAltitude, double desiredAltitude, double deltaV)
