@@ -1,27 +1,28 @@
-# Visual Studio
-.vs/
-*.suo
-*.user
-*.userprefs
-*.sln.ide
-
-# KSP
-*.ckpt
-*.craft
-*.science
-*.saves/
-
-# C#
+# Build outputs
 bin/
 obj/
-*.dll
-*.exe
-*.pdb
-*.mdb
-*.cache
-*.serialized
-*.sln.cache
+[Bb]uild/
+[Dd]ist/
 
-# Others
+# VS / Rider
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# NuGet
+packages/
+*.nupkg
+
+# Logs
+*.log
+
+# OS
 .DS_Store
 Thumbs.db
+
+# KSP runtime artifacts (if you point builds at a dev install)
+GameData/**/Plugins/*.pdb
+GameData/**/Plugins/*.mdb
