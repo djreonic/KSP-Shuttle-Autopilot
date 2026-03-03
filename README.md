@@ -1,71 +1,53 @@
-# KSP Shuttle Autopilot
+# KSP Shuttle Autopilot Documentation
 
-STS-specific Deorbit, Entry, and Landing Autopilot for Kerbal Space Program (KSP 1.12.x)
+## Version 1.1 Baseline
 
+This directory contains the authoritative documentation set for the KSP
+Shuttle Autopilot project.
+
+### Governing Documents
+
+-   Master Reference Index
+-   Project Scope
+-   System Requirements
+-   Architecture Design Document
+-   Interface Control Document
+-   Detailed Algorithm Specification
+
+### Claude Usage Recommendation
+
+When working with GitHub Claude:
+
+Use the following initialization statement:
+
+"Use Master Reference Index v1.1 as baseline. We are implementing
+\[ModuleName\], Phase \[1 or 2\], governed by System Requirements §X and
+Algorithm Specification §Y."
+
+PDF versions are included for improved parsing and readability within
+AI-assisted development tools.
 ---
 
-## Project Status
+## Repo Starter Scaffold (added)
 
-**Version 1.0 Alpha — Deorbit / Entry / Landing (DEL)**
+This repo includes a minimal, buildable *starter* layout aligned to the **Architecture Design Document** and **Master Reference Index v1.1**.
 
-This release focuses exclusively on:
+### Directory Layout
 
-- Deorbit planning
-- Lifting reentry guidance
-- TAEM / HAC geometry
-- Final approach & autoland
-- System scale support (1×–10×)
-- FAR primary backend
-- Stock aero support (tuned at end of Alpha)
+- `src/` — C# plugin source (Phase 1 baseline modules scaffolded)
+- `GameData/` — install-ready folder structure (place built DLL into `Plugins/`)
+- `.github/` — issue templates and PR template
+- `docs/` — authoritative documentation set (DOCX + PDF)
 
-No ascent, abort, rendezvous, or realism integrations are included in this phase.
+### Mobile + GitHub Claude Workflow
 
----
+1. Open the relevant PDF in `docs/v1.1/` when referencing requirements.
+2. Start each Claude session with:
 
-## Important Disclaimer
+> Use Master Reference Index v1.1 as baseline. We are implementing [ModuleName], Phase [1 or 2], governed by System Requirements §X and Algorithm Specification §Y.
 
-This autopilot is intended for STS-style Shuttle stacks (e.g., SOCK).
+3. Keep PRs/commits scoped to a single module whenever practical.
 
-It is not a general-purpose autopilot and will likely not function correctly with non-Shuttle craft configurations.
+### Attribution
 
-The autopilot will not operate until the in-game disclaimer is acknowledged.
-
----
-
-## Design Philosophy
-
-- Correctness over cosmetics
-- Deterministic guidance logic
-- Strict SDLC governance
-- No scope creep during Alpha
-- Not a replacement for MechJeb
-
----
-
-## Development Roadmap
-
-### Version 1.0
-DEL autopilot only (Alpha → Beta → Stable)
-
-### Version 2.0
-Ascent autopilot + abort modes + propellant dump
-
-### Version 3.0
-Orbital ops + rendezvous + rescue ascent
-
-### Version 4.0
-Optional realism integrations (RealFuels, failures, DRE, etc.)
-
----
-
-## Compatibility
-
-- KSP 1.12.x
-- FAR (primary development backend)
-- Stock aerodynamics (supported)
-
-Not intended for RSS/RO.
-
----
-
-## Repository Structure
+Repo owner / handle: **DJ Reonic**
