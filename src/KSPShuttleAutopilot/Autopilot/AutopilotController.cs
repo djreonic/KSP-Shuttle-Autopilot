@@ -1,49 +1,44 @@
-namespace KSPShuttleAutopilot.Autopilot
+using UnityEngine;
+
+public class AutopilotController : MonoBehaviour
 {
-    /// <summary>
-    /// Central state orchestration and module coordination.
-    /// Governed by Architecture Design Document and Master Reference Index v1.1.
-    /// </summary>
-    public sealed class AutopilotController
+    private Settings _settings;
+    private Plans _plans;
+
+    public void Initialize()
     {
-        private VesselContext _vessel;
-
-        private Planning.DeorbitPlanner _planner;
-        private Execution.ManeuverNodeService _nodeService;
-        private Execution.BurnExecutor _burnExecutor;
-
-        private Persistence.SettingsStore _settings;
-        private Persistence.PlanStore _plans;
-
-        private UI.MainWindow _ui;
-
-        public void Initialize()
+        _settings = new Settings();
+        _plans = new Plans();
+        try
         {
-            _vessel = new VesselContext();
-
-            _settings = new Persistence.SettingsStore();
-            _plans = new Persistence.PlanStore();
-
-            _planner = new Planning.DeorbitPlanner(_vessel, _settings, _plans);
-            _nodeService = new Execution.ManeuverNodeService(_vessel, _settings, _plans);
-            _burnExecutor = new Execution.BurnExecutor(_vessel, _settings, _plans);
-
-            _ui = new UI.MainWindow(_planner, _nodeService, _burnExecutor, _settings, _plans);
-            _ui.Initialize();
+            _settings.Load();
+            _plans.Load();
         }
-
-        public void OnUpdate()
+        catch (System.Exception e)
         {
-            _vessel.Refresh();
-
-            _ui?.OnUpdate();
-            _burnExecutor?.OnUpdate();
+            UnityEngine.Debug.LogError("Error loading settings and plans: " + e.Message);
         }
+    }
 
-        public void Dispose()
+    public void Dispose()
+    {
+        try
         {
-            _ui?.Dispose();
-            _ui = null;
+            Save();
         }
+        catch (System.Exception e)
+        {
+            UnityEngine.Debug.LogError("Error during disposal: " + e.Message);
+        }
+    }
+
+    private void OnUpdate()
+    {
+        // Ensure no file IO occurs here.
+    }
+
+    private void Save()
+    {
+        // Save logic here
     }
 }
