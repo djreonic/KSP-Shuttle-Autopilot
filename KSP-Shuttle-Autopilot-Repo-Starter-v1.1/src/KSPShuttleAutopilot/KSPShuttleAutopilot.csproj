@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>KSPShuttleAutopilot</AssemblyName>
+    <RootNamespace>KSPShuttleAutopilot</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Nullable>disable</Nullable>
+    <Platforms>x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+
+  <!--
+    KSP References (add in your IDE, or convert to HintPath entries):
+
+    <Reference Include="Assembly-CSharp"><HintPath>$(KSP_MANAGED)\Assembly-CSharp.dll</HintPath></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(KSP_MANAGED)\UnityEngine.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(KSP_MANAGED)\UnityEngine.CoreModule.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.UI"><HintPath>$(KSP_MANAGED)\UnityEngine.UI.dll</HintPath></Reference>
+    ... see Master Reference Index v1.1 for the authoritative list.
+  -->
+
+</Project>
